@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -159,8 +158,8 @@ func (t *Transcoder) CreateOutputPipe(containerFormat string) (*io.PipeReader, e
 // Initialize Init the transcoding process
 func (t *Transcoder) Initialize(inputPath string, outputPath string) error {
 	var err error
-	var outb, errb bytes.Buffer
-	var Metadata media.Metadata
+	//var outb, errb bytes.Buffer
+	//var Metadata media.Metadata
 
 	cfg := t.configuration
 
@@ -175,28 +174,28 @@ func (t *Transcoder) Initialize(inputPath string, outputPath string) error {
 		return errors.New("error on transcoder.Initialize: inputPath missing")
 	}
 
-	command := []string{"-i", inputPath, "-print_format", "json", "-show_format", "-show_streams", "-show_error"}
+	//command := []string{"-i", inputPath, "-print_format", "json", "-show_format", "-show_streams", "-show_error"}
+	//
+	//if t.whiteListProtocols != nil {
+	//	command = append([]string{"-protocol_whitelist", strings.Join(t.whiteListProtocols, ",")}, command...)
+	//}
 
-	if t.whiteListProtocols != nil {
-		command = append([]string{"-protocol_whitelist", strings.Join(t.whiteListProtocols, ",")}, command...)
-	}
+	//cmd := exec.Command(cfg.FFprobeBinPath(), command...)
+	//cmd.Stdout = &outb
+	//cmd.Stderr = &errb
+	//
+	//err = cmd.Run()
+	//if err != nil {
+	//	return fmt.Errorf("error executing (%s) | error: %s | message: %s %s", command, err, outb.String(), errb.String())
+	//}
 
-	cmd := exec.Command(cfg.FFprobeBinPath(), command...)
-	cmd.Stdout = &outb
-	cmd.Stderr = &errb
-
-	err = cmd.Run()
-	if err != nil {
-		return fmt.Errorf("error executing (%s) | error: %s | message: %s %s", command, err, outb.String(), errb.String())
-	}
-
-	if err = json.Unmarshal(outb.Bytes(), &Metadata); err != nil {
-		return err
-	}
+	//if err = json.Unmarshal(outb.Bytes(), &Metadata); err != nil {
+	//	return err
+	//}
 
 	// Set new File
 	MediaFile := new(media.File)
-	MediaFile.SetMetadata(Metadata)
+	//MediaFile.SetMetadata(Metadata)
 	MediaFile.SetInputPath(inputPath)
 	MediaFile.SetOutputPath(outputPath)
 
