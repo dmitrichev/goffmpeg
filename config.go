@@ -15,16 +15,16 @@ const (
 )
 
 type Configuration struct {
-	ffprobeBinPath string
-	ffmpegBinPath  string
+	FfprobeBinPath string
+	FfmpegBinPath  string
 }
 
 func (cfg Configuration) FFmpegBinPath() string {
-	return cfg.ffmpegBinPath
+	return cfg.FfmpegBinPath
 }
 
 func (cfg Configuration) FFprobeBinPath() string {
-	return cfg.ffprobeBinPath
+	return cfg.FfprobeBinPath
 }
 
 func Configure(ctx context.Context) (Configuration, error) {
@@ -47,8 +47,8 @@ func Configure(ctx context.Context) (Configuration, error) {
 	}
 
 	return Configuration{
-		ffmpegBinPath:  normalizeBinPath(ffmpegBin),
-		ffprobeBinPath: normalizeBinPath(ffprobeBin),
+		FfmpegBinPath:  normalizeBinPath(ffmpegBin),
+		FfprobeBinPath: normalizeBinPath(ffprobeBin),
 	}, nil
 }
 
